@@ -1,7 +1,53 @@
-/*
-This is empty on purpose! Your code to build the resume will go here.
- */
+// Biography Object
+var bio = {
+	"name" : "Cory Pickrel",
+	"role" : "Software Developer",
+	"contacts" : {
+		"mobile" : "512-787-8871",
+		"email" : "cpickrel4@gmail.com",
+		"github" : "ceepick",
+		"location" : "Austin, TX"
+	},
+	"welcomeMessage" : "Hey there, Steam.",
+	"skills" : [
+		"Java", "iOS", "Web Development"
+	],
+	"biopic" : "images/biopic.png"
+}
+bio.display = function() {
+	// Add name and role (hr tag separates following data)
+	var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
+	$("#header").prepend(formattedRole);
+	var formattedName = HTMLheaderName.replace("%data%", bio.name);
+	$("#header").prepend(formattedName);
 
+	// Add contact information to list
+	var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
+	$("#topContacts").append(formattedMobile);
+	var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email);
+	$("#topContacts").append(formattedEmail);
+	var formattedGithub = HTMLgithub.replace("%data%", bio.contacts.github);
+	$("#topContacts").append(formattedGithub);
+	var formattedLocation = HTMLlocation.replace("%data%", bio.contacts.location);
+	$("#topContacts").append(formattedLocation);
+
+	// Add picture and greeting
+	var bioPic = HTMLbioPic.replace("%data%", bio.biopic);
+	$("#header").append(bioPic);
+	var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
+	$("#header").append(formattedWelcomeMsg);
+
+	// Iterate through skills and add to page
+	if (bio.skills.length > 0) {
+		$("#header").append(HTMLskillsStart);
+		bio.skills.forEach(function(item) {
+			var skill = HTMLskills.replace("%data%", item);
+			$("#skills").append(skill);
+		});
+	}
+}
+
+// Work Object
 var work = {
 	"jobs" : [
 		{
@@ -27,7 +73,25 @@ var work = {
 		},
 	]
 }
+work.display = function() {
+	work.jobs.forEach(function(job) {
+		$("#workExperience").append(HTMLworkStart);
 
+		var formattedEmployer = HTMLworkEmployer.replace("%data%", job.employer);
+		var formattedTitle = HTMLworkTitle.replace("%data%", job.title);
+		var formattedEmployerTitle = formattedEmployer + formattedTitle;
+
+		$(".work-entry:last").append(formattedEmployerTitle);
+
+		var formattedDates = HTMLworkDates.replace("%data%", job.dates);
+		$(".work-entry:last").append(formattedDates);
+
+		var formattedDescription = HTMLworkDescription.replace("%data%", job.description);
+		$(".work-entry:last").append(formattedDescription);
+	});
+}
+
+// Projects Object
 var projects = {
 	"projects" : [
 		{
@@ -43,6 +107,7 @@ var projects = {
 			"images" : []
 		}
 	],
+	// Just to show different declaration styles. I didn't see this on the style guide - which is preferred?
 	"display" : function() {
 		projects.projects.forEach(function(item) {
 			$("#projects").append(HTMLprojectStart);
@@ -62,29 +127,16 @@ var projects = {
 	}
 }
 
-var bio = {
-	"name" : "Cory Pickrel",
-	"role" : "Software Developer",
-	"skills" : ["Java", "iOS", "Web Development"],
-	"contacts" : {
-		"mobile" : "512-787-8871",
-		"email" : "cpickrel4@gmail.com",
-		"github" : "ceepick",
-		"location" : "Austin, TX"
-	},
-	"bioPic" : "images/biopic.png",
-	"welcomeMessage" : "Hey there, Steam."
-}
-
+// Education Object
 var education = {
 	"schools" : [
 		{
 			"name" : "Texas State University",
-			"type" : "University",
+			"location" : "San Marcos",
+			"degree" : "Bachelors",
 			"majors" : ["Computer Science"],
 			"minors" : ["Mathematics"],
-			"graduationDate" : "August 2011",
-			"location" : "San Marcos"
+			"dates" : "2009 - 2011"
 		}
 	],
 	"onlineCourses" : [
@@ -96,67 +148,90 @@ var education = {
 		}
 	]
 }
+education.display = function() {
+	education.schools.forEach(function(school) {
+		// Schools
+		$("#education").append(HTMLschoolStart);
 
-$("#main").append(internationalizeButton);
-$("#mapDiv").append(googleMap);
+		var formattedName = HTMLschoolName.replace("%data%", school.name);
+		var formattedDegree = HTMLschoolDegree.replace("%data%", school.degree);
+		$(".education-entry:last").append(formattedName + formattedDegree);
 
-function inName() {
-	var names = bio.name.trim.split(" ");
-	var firstName = names[0].charAt(0).toUpperCase() + names[0].slice(1).toLowerCase();
-	var lastName = names[1].toUpperCase();
-	return firstName + " " + lastName;
-}
+		var formattedDates = HTMLschoolDates.replace("%data%", school.dates);
+		$(".education-entry:last").append(formattedDates);
 
-var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
-$("#header").prepend(formattedRole);
+		var formattedLocation = HTMLschoolLocation.replace("%data%", school.location);
+		$(".education-entry:last").append(formattedLocation);
 
-var formattedName = HTMLheaderName.replace("%data%", bio.name);
-$("#header").prepend(formattedName);
+		var formattedMajor = HTMLschoolMajor.replace("%data%", school.majors);
+		$(".education-entry:last").append(formattedMajor);
+	});
 
-var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
-$("#header").append(formattedMobile);
-var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email);
-$("#header").append(formattedEmail);
-var formattedGithub = HTMLgithub.replace("%data%", bio.contacts.github);
-$("#header").append(formattedGithub);
-var formattedLocation = HTMLlocation.replace("%data%", bio.contacts.location);
-$("#header").append(formattedLocation);
+	// Online Courses
+	$("#education").append(HTMLonlineClasses);
 
-var bioPic = HTMLbioPic.replace("%data%", bio.bioPic);
-$("#header").append(bioPic);
-var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
-$("#header").append(formattedWelcomeMsg);
+	education.onlineCourses.forEach(function(course) {
+		$("#education").append(HTMLschoolStart);
 
+		var formattedTitle = HTMLonlineTitle.replace("%data%", course.title);
+		var formattedSchool = HTMLonlineSchool.replace("%data%", course.school);
+		$(".education-entry:last").append(formattedTitle + formattedSchool);
 
-if (bio.skills.length > 0) {
-	$("#header").append(HTMLskillsStart);
-	bio.skills.forEach(function(item) {
-		var skill = HTMLskills.replace("%data%", item);
-		$("#skills").append(skill);
+		var formattedDates = HTMLonlineDates.replace("%data%", course.dates);
+		$(".education-entry:last").append(formattedDates);
+
+		var formattedOnlineURL = HTMLonlineURL.replace("%data%", course.url);
+		$(".education-entry:last").append(formattedOnlineURL);
 	});
 }
 
-function displayWork() {
-	work.jobs.forEach(function(job) {
-		$("#workExperience").append(HTMLworkStart);
-
-		var formattedEmployer = HTMLworkEmployer.replace("%data%", job.employer);
-		var formattedTitle = HTMLworkTitle.replace("%data%", job.title);
-		var formattedEmployerTitle = formattedEmployer + formattedTitle;
-
-		$(".work-entry:last").append(formattedEmployerTitle);
-
-		var formattedDates = HTMLworkDates.replace("%data%", job.dates);
-		$(".work-entry:last").append(formattedDates);
-
-		var formattedDescription = HTMLworkDescription.replace("%data%", job.description);
-		$(".work-entry:last").append(formattedDescription);
-	});	
-}
-displayWork();
-
-$(document).click(function(loc) {
-	logClicks(loc.pageX, loc.pageY);
-});
-
+// Display details
+bio.display();
+work.display();
 projects.display();
+education.display();
+$("#mapDiv").append(googleMap);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
