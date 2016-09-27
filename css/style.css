@@ -104,7 +104,7 @@ a {
 }
 
 #skills-h3 {
-  color: #f5ae23;
+  color: #E2DB71;
   display: none;
 }
 
@@ -116,12 +116,12 @@ a {
   color: #57D6EF;
 }
 
-.orange {
-  background-color: #f5ae23;
+.yellow {
+  background-color: #E2DB71;
 }
 
-.orange-text {
-  color: #f5ae23;
+.yellow-text {
+  color: #E2DB71;
 }
 
 .white-text {
@@ -137,6 +137,10 @@ a {
 
 .dark-gray {
   background-color: #4a4a4a;
+}
+
+.dark-gray-text {
+  color: #4a4a4a;
 }
 
 /* TODO: Replace with image later */
