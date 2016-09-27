@@ -8,12 +8,17 @@ var bio = {
 		"github" : "ceepick",
 		"location" : "Austin, TX"
 	},
-	"welcomeMessage" : "Hey there, Steam.",
+	"welcomeMessage" : "Hey there, friend.",
 	"skills" : [
-		"Java", "iOS", "Web Development"
+		"Leadership", "Java/J2EE", "iOS Development", 
+		"Web Development", "C/C++", "Web Service Development (SOAP/REST)"
 	],
 	"biopic" : "images/biopic.png"
-}
+};
+bio.appendContact = function(formattedContactItem) {
+	$("#topContacts").append(formattedContactItem);
+	$("#footerContacts").append(formattedContactItem);
+};
 bio.display = function() {
 	// Add name and role (hr tag separates following data)
 	var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
@@ -23,13 +28,13 @@ bio.display = function() {
 
 	// Add contact information to list
 	var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
-	$("#topContacts").append(formattedMobile);
+	bio.appendContact(formattedMobile);
 	var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email);
-	$("#topContacts").append(formattedEmail);
+	bio.appendContact(formattedEmail);
 	var formattedGithub = HTMLgithub.replace("%data%", bio.contacts.github);
-	$("#topContacts").append(formattedGithub);
+	bio.appendContact(formattedGithub);
 	var formattedLocation = HTMLlocation.replace("%data%", bio.contacts.location);
-	$("#topContacts").append(formattedLocation);
+	bio.appendContact(formattedLocation);
 
 	// Add picture and greeting
 	var bioPic = HTMLbioPic.replace("%data%", bio.biopic);
@@ -40,12 +45,12 @@ bio.display = function() {
 	// Iterate through skills and add to page
 	if (bio.skills.length > 0) {
 		$("#header").append(HTMLskillsStart);
-		bio.skills.forEach(function(item) {
-			var skill = HTMLskills.replace("%data%", item);
-			$("#skills").append(skill);
+		bio.skills.forEach(function(skill) {
+			var formattedSkill = HTMLskills.replace("%data%", skill);
+			$("#skills").append(formattedSkill);
 		});
 	}
-}
+};
 
 // Work Object
 var work = {
@@ -55,33 +60,32 @@ var work = {
 			"title" : "Assistant Manager",
 			"location" : "Austin, TX",
 			"dates" : "2003 - 2009",
-			"description" : "Making people happy!"
+			"description" : "Make People Happy!"
 		},
 		{
 			"employer" : "Texas State University",
 			"title" : "Tutor",
 			"location" : "San Marcos, TX",
 			"dates" : "2009 - 2011",
-			"description" : "Tutoring Computer Science Students"
+			"description" : "Tutor Computer Science and Mathematics Students"
 		},
 		{
 			"employer" : "USAA",
 			"title" : "Software Developer",
 			"location" : "San Antonio, TX",
 			"dates" : "2011 - Present",
-			"description" : "Software Engineering and Integration"
+			"description" : "Software Development and Integration"
 		},
 	]
-}
+};
 work.display = function() {
 	work.jobs.forEach(function(job) {
 		$("#workExperience").append(HTMLworkStart);
 
+		// Add Employer and Title to same line
 		var formattedEmployer = HTMLworkEmployer.replace("%data%", job.employer);
 		var formattedTitle = HTMLworkTitle.replace("%data%", job.title);
-		var formattedEmployerTitle = formattedEmployer + formattedTitle;
-
-		$(".work-entry:last").append(formattedEmployerTitle);
+		$(".work-entry:last").append(formattedEmployer + formattedTitle);
 
 		var formattedDates = HTMLworkDates.replace("%data%", job.dates);
 		$(".work-entry:last").append(formattedDates);
@@ -89,7 +93,7 @@ work.display = function() {
 		var formattedDescription = HTMLworkDescription.replace("%data%", job.description);
 		$(".work-entry:last").append(formattedDescription);
 	});
-}
+};
 
 // Projects Object
 var projects = {
@@ -97,35 +101,35 @@ var projects = {
 		{
 			"title" : "Self-Serve Teller Check",
 			"dates" : "2012",
-			"description" : "Allow members to create and print their own official (cashier) checks at a kiosk",
-			"images" : []
+			"description" : "Allow members to create and print their own official (cashier) checks at a Financial Center kiosk.",
+			"images" : ["images/usaaFinCenter.jpg"]
 		},
 		{
 			"title" : "USAA Biometrics",
 			"dates" : "2013",
-			"description" : "Allow members to authenticate to USAA using biometrics (face, voice, fingerprint)",
-			"images" : []
+			"description" : "Allow members to authenticate to USAA using biometrics (face, voice, fingerprint).",
+			"images" : ["images/biometrics.jpg"]
 		}
 	],
-	// Just to show different declaration styles. I didn't see this on the style guide - which is preferred?
+	// Literal form to show different function declaration styles.
 	"display" : function() {
-		projects.projects.forEach(function(item) {
+		projects.projects.forEach(function(project) {
 			$("#projects").append(HTMLprojectStart);
 
-			var formattedTitle = HTMLprojectTitle.replace("%data%", item.title);
+			var formattedTitle = HTMLprojectTitle.replace("%data%", project.title);
 			$(".project-entry:last").append(formattedTitle);
 
-			var formattedDates = HTMLprojectDates.replace("%data%", item.dates);
+			var formattedDates = HTMLprojectDates.replace("%data%", project.dates);
 			$(".project-entry:last").append(formattedDates);
 
-			var formattedDescription = HTMLprojectDescription.replace("%data%", item.description);
+			var formattedDescription = HTMLprojectDescription.replace("%data%", project.description);
 			$(".project-entry:last").append(formattedDescription);
 
-			// var formattedImage = HTMLprojectImage.replace("%data%", item.image);
-			// $(".project-entry:last").append(formattedImage);
+			var formattedImage = HTMLprojectImage.replace("%data%", project.images);
+			$(".project-entry:last").append(formattedImage);
 		});
 	}
-}
+};
 
 // Education Object
 var education = {
@@ -136,7 +140,8 @@ var education = {
 			"degree" : "Bachelors",
 			"majors" : ["Computer Science"],
 			"minors" : ["Mathematics"],
-			"dates" : "2009 - 2011"
+			"dates" : "2009 - 2011",
+			"url" : "www.txstate.edu"
 		}
 	],
 	"onlineCourses" : [
@@ -147,10 +152,10 @@ var education = {
 			"url" : "http://www.udacity.com"
 		}
 	]
-}
+};
 education.display = function() {
+	// Iterate over the schools and add them to page
 	education.schools.forEach(function(school) {
-		// Schools
 		$("#education").append(HTMLschoolStart);
 
 		var formattedName = HTMLschoolName.replace("%data%", school.name);
@@ -167,9 +172,8 @@ education.display = function() {
 		$(".education-entry:last").append(formattedMajor);
 	});
 
-	// Online Courses
 	$("#education").append(HTMLonlineClasses);
-
+	// Iterate over online courses and add them to page
 	education.onlineCourses.forEach(function(course) {
 		$("#education").append(HTMLschoolStart);
 
@@ -183,55 +187,11 @@ education.display = function() {
 		var formattedOnlineURL = HTMLonlineURL.replace("%data%", course.url);
 		$(".education-entry:last").append(formattedOnlineURL);
 	});
-}
+};
 
-// Display details
-bio.display();
-work.display();
-projects.display();
-education.display();
+// Display details (out of order to show modularity and lack of dependence on order)
 $("#mapDiv").append(googleMap);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+projects.display();
+work.display();
+education.display();
+bio.display();
