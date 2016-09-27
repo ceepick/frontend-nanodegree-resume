@@ -108,6 +108,14 @@ a {
   display: none;
 }
 
+.blue {
+  background-color: #57D6EF;
+}
+
+.blue-text {
+  color: #57D6EF;
+}
+
 .orange {
   background-color: #f5ae23;
 }

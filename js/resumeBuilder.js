@@ -52,32 +52,23 @@ bio.display = function() {
 	}
 };
 
-// Work Object
-var work = {
-	"jobs" : [
-		{
-			"employer" : "Amy's Ice Creams",
-			"title" : "Assistant Manager",
-			"location" : "Austin, TX",
-			"dates" : "2003 - 2009",
-			"description" : "Make People Happy!"
-		},
-		{
-			"employer" : "Texas State University",
-			"title" : "Tutor",
-			"location" : "San Marcos, TX",
-			"dates" : "2009 - 2011",
-			"description" : "Tutor Computer Science and Mathematics Students"
-		},
-		{
-			"employer" : "USAA",
-			"title" : "Software Developer",
-			"location" : "San Antonio, TX",
-			"dates" : "2011 - Present",
-			"description" : "Software Development and Integration"
-		},
-	]
+// Work Object (Prototyping/Dynamic Instantiation for fun)
+function Job(employer, title, location, dates, description) {
+	this.employer = employer;
+	this.title = title;
+	this.location = location;
+	this.dates = dates;
+	this.description = description;
 };
+function Work(jobs) {
+	this.jobs = jobs;
+};
+var jobs = [
+	new Job("Amy's Ice Creams", "Assistant Manager", "Austin, TX", "2003 - 2009", "Make People Happy!"),
+	new Job("Texas State University", "Tutor/Lab Instructor", "San Marcos, TX", "2009 - 2011", "Tutor CS and Mathematics Students"),
+	new Job("USAA", "Software Developer", "San Antonio, TX", "2011 - Present", "Software Development and Integration")
+]
+var work = new Work(jobs);
 work.display = function() {
 	work.jobs.forEach(function(job) {
 		$("#workExperience").append(HTMLworkStart);
@@ -109,9 +100,21 @@ var projects = {
 			"dates" : "2013",
 			"description" : "Allow members to authenticate to USAA using biometrics (face, voice, fingerprint).",
 			"images" : ["images/biometrics.jpg"]
+		},
+		{
+			"title" : "USAA Digital Wallet",
+			"dates" : "2014",
+			"description" : "USAA-Centric Digital Wallet provides access to account and card information.",
+			"images" : []
+		},
+		{
+			"title" : "Proprietary Innovation",
+			"dates" : "2014 - Present",
+			"description" : "These are not the droids you are looking for.",
+			"images" : []
 		}
 	],
-	// Literal form to show different function declaration styles.
+	// Literal form to show different function declaration styles
 	"display" : function() {
 		projects.projects.forEach(function(project) {
 			$("#projects").append(HTMLprojectStart);
